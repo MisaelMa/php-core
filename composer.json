@@ -2,7 +2,8 @@
     "name": "signati/core",
     "description": "cfdi xml.",
     "keywords": ["CFDI", "XML", "package"],
-    "license": "TIM",
+    "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "siga",
