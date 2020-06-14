@@ -6,8 +6,16 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "siga",
-            "email": ""
+            "name": "signati",
+            "email": "signatidev@gmail.com",
+            "homepage": "signati.io",
+            "role": "Developer"
+        },
+        {
+            "name": "amir misael marin coh",
+            "email": "amisael.amir.misael@gmail.com",
+            "homepage": "misael.signati.app",
+            "role": "Developer"
         }
     ],
     "type": "project",
