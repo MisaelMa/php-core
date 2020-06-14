@@ -1,0 +1,24 @@
+{
+    "name": "Signati/core",
+    "description": "cfdi xml.",
+    "keywords": ["CFDI", "XML", "package"],
+    "license": "TIM",
+    "authors": [
+        {
+            "name": "siga",
+            "email": ""
+        }
+    ],
+    "type": "project",
+    "require": {
+		"php": ">=7.1"
+    },
+    "require-dev": {
+		"phpunit/phpunit": "6.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Signati\\Core\\": "src/"
+        }
+    }
+}
