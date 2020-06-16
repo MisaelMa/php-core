@@ -6,6 +6,8 @@ require '../vendor/autoload.php';
 use Spatie\ArrayToXml\ArrayToXml;
 use Signati\Core\CFDI;
 use Signati\Core\Tags\Relacionado;
+use Signati\Core\Tags\Emisor;
+use Signati\Core\Tags\Receptor;
 use DOMDocument;
 
 $cfdi = new CFDI([
@@ -25,7 +27,25 @@ $cfdi = new CFDI([
 $relacion = new Relacionado('01');
 $relacion->addRelacion('asdasdsad');
 $relacion->addRelacion('dalia');
-if (true) {
+
+$cfdi->relacionados($relacion);
+$emisor = new Emisor([
+    'Rfc' => "XXXXXX",
+    'Nombre' => "signait",
+    'RegimenFiscal' => "602"
+]);
+$cfdi->emisor($emisor);
+
+$receptor = new Receptor([
+    'Rfc' => "asdsad",
+    'Nombre' => "amir",
+    'ResidenciaFiscal' => "1231",
+    'NumRegIdTrib' => "1231",
+    'UsoCFDI' => "012"
+]);
+$cfdi->receptor($receptor);
+
+if (!true) {
 
     echo '<pre>';
     print_r(json_encode($relacion->getRelation()));
@@ -33,7 +53,7 @@ if (true) {
     exit();
 } else {
 
-    $cfdi->relacionados($relacion);
+
 //var_dump($cfdi->getArrayXML());
     header("Content-type: application/xhtml+xml");
     echo $cfdi->getXML();
