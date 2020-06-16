@@ -22,13 +22,13 @@ $cfdi = new CFDI([
     'MetodoPago' => 'PUE',
     'LugarExpedicion' => '64000',
 ]);
-$relacion = new Relacionado(['TipoRelacion' => '01']);
-$relacion->addRelacion();
-$relacion->addRelacion();
-if (!true) {
+$relacion = new Relacionado('01');
+$relacion->addRelacion('asdasdsad');
+$relacion->addRelacion('dalia');
+if (true) {
 
     echo '<pre>';
-    print_r($relacion->getRelation());
+    print_r(json_encode($relacion->getRelation()));
     echo '</pre>';
     exit();
 } else {
