@@ -9,6 +9,8 @@ use Signati\Core\Tags\Relacionado;
 use Signati\Core\Tags\Emisor;
 use Signati\Core\Tags\Receptor;
 use Signati\Core\Tags\Concepto;
+use Signati\Core\Tags\Impuestos;
+
 use DOMDocument;
 
 $cfdi = new CFDI([
@@ -58,9 +60,10 @@ $concepto = new Concepto([
     'Importe' => '00',
     'Descuento' => '00',
 ]);
+$concepto->complemento();
 $cfdi->concepto($concepto);
 
-$concepto2= new Concepto([
+$concepto2 = new Concepto([
     'ClaveProdServ' => '3243',
     'NoIdentificacion' => '234234',
     'Cantidad' => '1',
@@ -72,7 +75,46 @@ $concepto2= new Concepto([
     'Descuento' => '00',
 ]);
 $cfdi->concepto($concepto2);
-if (!true) {
+
+$impuest = new Impuestos([
+    'TotalImpuestosRetenidos' => '',
+    'TotalImpuestosTrasladados' => '',
+]);
+$impuest->traslados([
+    'Impuesto' => '',
+    'TipoFactor' => '',
+    'TasaOCuota' => '',
+    'Importe' => '',
+]);
+$impuest->traslados([
+    'Impuesto' => '',
+    'TipoFactor' => '',
+    'TasaOCuota' => '',
+    'Importe' => '',
+]);
+
+$impuest->traslados([
+    'Impuesto' => '',
+    'TipoFactor' => '',
+    'TasaOCuota' => '',
+    'Importe' => '',
+]);
+
+$impuest->retenciones([
+    'Impuesto' => '',
+    'TipoFactor' => '',
+    'TasaOCuota' => '',
+    'Importe' => '',
+]);
+
+$impuest->retenciones([
+    'Impuesto' => '',
+    'TipoFactor' => '',
+    'TasaOCuota' => '',
+    'Importe' => '',
+]);
+$cfdi->impuesto($impuest);
+if (true) {
 
     echo '<pre>';
     print_r(json_encode($cfdi->getArray()));
