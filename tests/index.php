@@ -8,6 +8,7 @@ use Signati\Core\CFDI;
 use Signati\Core\Tags\Relacionado;
 use Signati\Core\Tags\Emisor;
 use Signati\Core\Tags\Receptor;
+use Signati\Core\Tags\Concepto;
 use DOMDocument;
 
 $cfdi = new CFDI([
@@ -45,10 +46,36 @@ $receptor = new Receptor([
 ]);
 $cfdi->receptor($receptor);
 
+
+$concepto = new Concepto([
+    'ClaveProdServ' => '3243',
+    'NoIdentificacion' => '234234',
+    'Cantidad' => '1',
+    'ClaveUnidad' => 'Pieza',
+    'Unidad' => '1',
+    'Descripcion' => 'asdad',
+    'ValorUnitario' => '322332',
+    'Importe' => '00',
+    'Descuento' => '00',
+]);
+$cfdi->concepto($concepto);
+
+$concepto2= new Concepto([
+    'ClaveProdServ' => '3243',
+    'NoIdentificacion' => '234234',
+    'Cantidad' => '1',
+    'ClaveUnidad' => 'Pieza',
+    'Unidad' => '1',
+    'Descripcion' => 'asdad',
+    'ValorUnitario' => '322332',
+    'Importe' => '00',
+    'Descuento' => '00',
+]);
+$cfdi->concepto($concepto2);
 if (!true) {
 
     echo '<pre>';
-    print_r(json_encode($relacion->getRelation()));
+    print_r(json_encode($cfdi->getArray()));
     echo '</pre>';
     exit();
 } else {
