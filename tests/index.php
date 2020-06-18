@@ -61,6 +61,22 @@ $concepto = new Concepto([
     'Descuento' => '00',
 ]);
 $concepto->complemento();
+
+$concepto->traslado([
+    'Base' => '',
+    'Impuesto' => '',
+    'TipoFactor' => '',
+    'TasaOCuota' => '',
+    'Importe' => '',
+]);
+
+$concepto->retencion([
+    'Base' => '',
+    'Impuesto' => '',
+    'TipoFactor' => '',
+    'TasaOCuota' => '',
+    'Importe' => '',
+]);
 $cfdi->concepto($concepto);
 
 $concepto2 = new Concepto([
@@ -114,7 +130,7 @@ $impuest->retenciones([
     'Importe' => '',
 ]);
 $cfdi->impuesto($impuest);
-if (true) {
+if (!true) {
 
     echo '<pre>';
     print_r(json_encode($cfdi->getArray()));
