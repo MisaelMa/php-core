@@ -36,12 +36,12 @@ class CFDI
 
     public function emisor(Emisor $emisor)
     {
-
+        $this->comprobante->emisor($emisor);
     }
 
     public function receptor(Receptor $receptor)
     {
-
+        $this->comprobante->receptor($receptor);
     }
 
     public function concepto(Concepto $concepto)
@@ -80,7 +80,7 @@ class CFDI
      *
      * @return string
      */
-    public function getArrayXML()
+    public function getArray()
     {
         return $this->comprobante->getArray();
         // $this->xml()->saveXML();

@@ -30,8 +30,8 @@ $cfdi = new CFDI([
 $relacion = new Relacionado('01');
 $relacion->addRelacion('asdasdsad');
 $relacion->addRelacion('dalia');
-
 $cfdi->relacionados($relacion);
+
 $emisor = new Emisor([
     'Rfc' => "XXXXXX",
     'Nombre' => "signait",
@@ -60,7 +60,7 @@ $concepto = new Concepto([
     'Importe' => '00',
     'Descuento' => '00',
 ]);
-$concepto->complemento();
+//$concepto->complemento();
 
 $concepto->traslado([
     'Base' => '',

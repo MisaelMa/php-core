@@ -5,33 +5,21 @@ namespace Signati\Core\Tags;
 class Relacionado
 {
     protected $relacionado = [
-        'cfdi:CfdiRelacionados' =>
-            [
-                '_attributes' => ['TipoRelacion' => '0'],
-                'cfdi:CfdiRelacionado' => [
-                    ['_attributes' => ['UUID' => 'assad']],
-                    ['_attributes' => ['UUID' => 'assad']]
-                ]
-            ],
+        'cfdi:CfdiRelacionados' => [
+            '_attributes' => ['TipoRelacion' => '0'],
+            'cfdi:CfdiRelacionado' => []
+        ]
     ];
 
-    public function __construct(array $data)
+    public function __construct($data)
     {
-        //  $this->relacionado['cfdi:CfdiRelacionados']['_attributes'] = $data;
+        $this->relacionado['cfdi:CfdiRelacionados']['_attributes']['TipoRelacion'] = $data;
     }
 
-    public function addRelacion()
+    public function addRelacion($uuid)
     {
-//        $last = $this->relacionado['cfdi:CfdiRelacionados'];
-//        $realacion = [
-//            'cfdi:CfdiRelacionado' => [
-//                '_attributes' => [
-//                    'UUID' => 'assad'
-//                ]
-//            ]
-//        ];
-//        array_push($last, $realacion);
-//        $this->relacionado['cfdi:CfdiRelacionado'] = $last;
+        $this->relacionado['cfdi:CfdiRelacionados']['cfdi:CfdiRelacionado'][] = ['_attributes' => ['UUID' => $uuid]];
+
     }
 
     public function getRelation()

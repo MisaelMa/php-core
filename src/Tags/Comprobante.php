@@ -37,9 +37,22 @@ class Comprobante
         $this->document = array_merge($this->document, $re->getRelation());
     }
 
-    public function getArray(){
+    public function emisor(Emisor $re)
+    {
+        $this->document = array_merge($this->document, $re->getEmisor());
+    }
+
+    public function receptor(Receptor $re)
+    {
+        $this->document = array_merge($this->document, $re->getReceptor());
+    }
+
+
+    public function getArray()
+    {
         return $this->document;
     }
+
     public function getDocument()
     {
         $result = ArrayToXml::convert($this->document, $this->tagRoot, true, 'UTF-8');
