@@ -38,7 +38,7 @@ class Comprobante
 
     public function relacionado(Relacionado $re)
     {
-        $this->document = array_merge($re->getRelation(), $this->document,);
+        $this->document = array_merge($re->getRelation(), $this->document);
     }
 
     public function emisor(Emisor $em)
@@ -54,6 +54,14 @@ class Comprobante
     public function concepto(Concepto $co)
     {
         $this->document['cfdi:Conceptos'][] = $co->getConcepto();
+    }
+
+    public function impuesto(Impuestos $im)
+    {
+        if (!$this->document['cfdi:Impuestos']) {
+            $this->document['cfdi:Impuestos'] = [];
+        }
+        $this->document['cfdi:Impuestos'] = $im->getImpuestos();
     }
 
 

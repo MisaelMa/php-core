@@ -49,9 +49,9 @@ class CFDI
         $this->comprobante->concepto($concept);
     }
 
-    public function impuesto(Impuestos $impuestos)
+    public function impuesto(Impuestos $im)
     {
-
+        $this->comprobante->impuesto($im);
     }
 
     public function complemento()
