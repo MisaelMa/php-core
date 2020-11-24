@@ -53,7 +53,7 @@ class Comprobante
 
     public function concepto(Concepto $co)
     {
-        $this->document['cfdi:Conceptos'][] = $co->getConcepto();
+        $this->document['cfdi:Conceptos']['cfdi:Concepto'][] = $co->getConcepto();
     }
 
     public function impuesto(Impuestos $im)

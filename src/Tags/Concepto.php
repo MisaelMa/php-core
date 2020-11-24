@@ -28,12 +28,12 @@ class Concepto
 
     }
 
-    public function traslado()
+    public function traslado(array $data)
     {
 
     }
 
-    public function retencion()
+    public function retencion(array $data)
     {
 
     }
