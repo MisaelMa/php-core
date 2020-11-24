@@ -6,18 +6,16 @@ class Receptor
 {
 
     protected $receptor = [
-        'cfdi:Receptor' => [
-            '_attributes' => [
-                'Rfc' => '',
-                'Nombre' => '',
-                'UsoCFDI' => ''
-            ],
-        ]
+        '_attributes' => [
+            'Rfc' => '',
+            'Nombre' => '',
+            'UsoCFDI' => ''
+        ],
     ];
 
     public function __construct(array $data)
     {
-        $this->receptor['cfdi:Receptor']['_attributes'] = $data;
+        $this->receptor['_attributes'] = $data;
     }
 
     public function getReceptor()

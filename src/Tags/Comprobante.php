@@ -15,7 +15,11 @@ class Comprobante
      *
      * @var DOMDocument
      */
-    protected $document = [];
+    protected $document = [
+        'cfdi:Emisor' => [],
+        'cfdi:Receptor' => [],
+        'cfdi:Conceptos' => [],
+    ];
 
     protected $tagRoot = [
         'rootElementName' => 'cfdi:Comprobante',
@@ -34,17 +38,22 @@ class Comprobante
 
     public function relacionado(Relacionado $re)
     {
-        $this->document = array_merge($this->document, $re->getRelation());
+        $this->document = array_merge($re->getRelation(), $this->document,);
     }
 
-    public function emisor(Emisor $re)
+    public function emisor(Emisor $em)
     {
-        $this->document = array_merge($this->document, $re->getEmisor());
+        $this->document['cfdi:Emisor'] = $em->getEmisor();
     }
 
     public function receptor(Receptor $re)
     {
-        $this->document = array_merge($this->document, $re->getReceptor());
+        $this->document['cfdi:Receptor'] = $re->getReceptor();
+    }
+
+    public function concepto(Concepto $co)
+    {
+        $this->document['cfdi:Conceptos'][] = $co->getConcepto();
     }
 
 

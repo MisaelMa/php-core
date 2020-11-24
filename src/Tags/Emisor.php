@@ -6,18 +6,16 @@ class Emisor
 {
 
     protected $emisor = [
-        'cfdi:Emisor' => [
-            '_attributes' => [
-                'Rfc' => '',
-                'Nombre' => '',
-                'RegimenFiscal' => ''
-            ],
-        ]
+        '_attributes' => [
+            'Rfc' => '',
+            'Nombre' => '',
+            'RegimenFiscal' => ''
+        ],
     ];
 
     public function __construct(array $data)
     {
-        $this->emisor['cfdi:Emisor']['_attributes'] = $data;
+        $this->emisor['_attributes'] = $data;
     }
 
     public function getEmisor()

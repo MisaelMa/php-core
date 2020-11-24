@@ -44,9 +44,9 @@ class CFDI
         $this->comprobante->receptor($receptor);
     }
 
-    public function concepto(Concepto $concepto)
+    public function concepto(Concepto $concept)
     {
-
+        $this->comprobante->concepto($concept);
     }
 
     public function impuesto(Impuestos $impuestos)
