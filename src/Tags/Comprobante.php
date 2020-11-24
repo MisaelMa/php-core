@@ -33,6 +33,7 @@ class Comprobante
 
     public function __construct(array $data, string $version)
     {
+        $this->tagRoot['_attributes'] = array_merge($this->tagRoot['_attributes'], $data);
         $this->tagRoot['_attributes']['Version'] = $version;
     }
 
