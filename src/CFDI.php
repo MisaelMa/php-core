@@ -1,94 +1,87 @@
 <?php
 
+
 namespace Signati\Core;
 
-use Signati\Core\Tags\Comprobante;
+use Signati\Core\Tags\Concepto;
 use Signati\Core\Tags\Emisor;
+use Signati\Core\Tags\Impuestos;
 use Signati\Core\Tags\Receptor;
 use Signati\Core\Tags\Relacionado;
-use Signati\Core\Tags\Concepto;
-use Signati\Core\Tags\Impuestos;
 use Spatie\ArrayToXml\ArrayToXml;
+use DOMDocument;
 
 class CFDI
 {
-
-    /** @var string */
-    protected $version = '3.3';
-
-    /** @var \Signati\Core\Tags\Comprobante */
-    protected $comprobante;
-
     /**
-     * Create a new CFDI Instance
+     * Node document.
+     *
+     * @var DOMDocument
      */
+    protected $document = [
+        'cfdi:Emisor' => [],
+        'cfdi:Receptor' => [],
+        'cfdi:Conceptos' => [],
+    ];
 
-    public function __construct(array $data)
+    protected $tagRoot = [
+        'rootElementName' => 'cfdi:Comprobante',
+        '_attributes' => [
+            'xmlns:cfdi' => 'http://www.sat.gob.mx/cfd/3',
+            'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
+            'xsi:schemaLocation' => 'http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd',
+            'Version' => '3.3',
+        ],
+    ];
+
+    public function __construct(array $data, string $version = '3.3')
     {
-        $this->comprobante = new Comprobante($data, $this->version);
-
+        $this->tagRoot['_attributes'] = array_merge($this->tagRoot['_attributes'], $data);
+        $this->tagRoot['_attributes']['Version'] = $version;
     }
 
-    public function relacionados(Relacionado $relacionado)
+    public function relacionados(Relacionado $re)
     {
-        $this->comprobante->relacionado($relacionado);
+        $this->document = array_merge($re->getRelation(), $this->document);
     }
 
-    public function emisor(Emisor $emisor)
+    public function emisor(Emisor $em)
     {
-        $this->comprobante->emisor($emisor);
+        $this->document['cfdi:Emisor'] = $em->getEmisor();
     }
 
-    public function receptor(Receptor $receptor)
+    public function receptor(Receptor $re)
     {
-        $this->comprobante->receptor($receptor);
+        $this->document['cfdi:Receptor'] = $re->getReceptor();
     }
 
-    public function concepto(Concepto $concept)
+    public function concepto(Concepto $co)
     {
-        $this->comprobante->concepto($concept);
+        $this->document['cfdi:Conceptos']['cfdi:Concepto'][] = $co->getConcepto();
     }
 
     public function impuesto(Impuestos $im)
     {
-        $this->comprobante->impuesto($im);
+        if (!$this->document['cfdi:Impuestos']) {
+            $this->document['cfdi:Impuestos'] = [];
+        }
+        $this->document['cfdi:Impuestos'] = $im->getImpuestos();
     }
 
-    public function complemento()
-    {
 
-    }
-
-    public function certificar()
-    {
-
-    }
-
-    public function sellar()
-    {
-
-    }
-
-    protected function xml()
-    {
-
-        return $this->comprobante->getDocument();
-    }
-
-    /**
-     * Get the xml.
-     *
-     * @return string
-     */
     public function getArray()
     {
-        return $this->comprobante->getArray();
-        // $this->xml()->saveXML();
+        return $this->document;
     }
 
-    public function getXML(): string
+    public function getDocument()
     {
-        return $this->xml();
-        // $this->xml()->saveXML();
+        $result = ArrayToXml::convert($this->document, $this->tagRoot, true, 'UTF-8');
+        $doc = new DOMDocument();
+        $doc->loadXML($result);
+        $doc->preserveWhiteSpace = false;
+        $doc->formatOutput = true;
+        return $doc->saveXML();
     }
+
 }

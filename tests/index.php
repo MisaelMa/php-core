@@ -3,15 +3,12 @@
 namespace Tests;
 require '../vendor/autoload.php';
 
-use Spatie\ArrayToXml\ArrayToXml;
 use Signati\Core\CFDI;
-use Signati\Core\Tags\Relacionado;
-use Signati\Core\Tags\Emisor;
-use Signati\Core\Tags\Receptor;
 use Signati\Core\Tags\Concepto;
+use Signati\Core\Tags\Emisor;
 use Signati\Core\Tags\Impuestos;
-
-use DOMDocument;
+use Signati\Core\Tags\Receptor;
+use Signati\Core\Tags\Relacionado;
 
 $cfdi = new CFDI([
     'Serie' => 'A',
@@ -141,6 +138,6 @@ if (!true) {
 
 //var_dump($cfdi->getArrayXML());
     header("Content-type: application/xhtml+xml");
-    echo $cfdi->getXML();
+    echo $cfdi->getDocument();
 }
 //echo 'Escrito: ' . $doc->save("./test.xml") . ' bytes'; // Escrito: 72 bytes
