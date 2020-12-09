@@ -137,7 +137,7 @@ if (!true) {
 
 
 //var_dump($cfdi->getArrayXML());
-    header("Content-type: application/xhtml+xml");
-    echo $cfdi->getDocument();
+    //header("Content-type: application/xhtml+xml");
+    var_dump(json_encode($cfdi->certificar('amir')));
 }
 //echo 'Escrito: ' . $doc->save("./test.xml") . ' bytes'; // Escrito: 72 bytes

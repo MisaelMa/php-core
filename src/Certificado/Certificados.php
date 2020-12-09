@@ -1,6 +1,6 @@
 <?php
 
-namespace Signati\Core\Utils;
+namespace Signati\Core\Certificado;
 class Certificados
 {
     private $_path = '';
@@ -274,6 +274,25 @@ class Certificados
         } else {
             $this->_estableceError(0, 'Al menos uno de los archivos requeridos no esta disponible');
             return $this->_return;
+        }
+    }
+
+    public function getNoCer(string $cer)
+    {
+        try {
+
+            $salidaCer = shell_exec('openssl x509 -inform DER -in  ' . $cer . ' -outform PEM');
+            $data = openssl_x509_parse($salidaCer, true);
+            // @ts-ignore
+            /*const serialNumber = pki.certificateFromPem(pem).serialNumber.match(/.{1,2}/g).map((v) => {
+                    return String.fromCharCode(parseInt(v, 16));
+                }).join('');*/
+            return implode('', array_map(function (string $value): string {
+                return chr(intval(hexdec($value)));
+            }, str_split($data['serialNumber'], 2)));
+
+        } catch (\Exception $e) {
+            return $e;
         }
     }
 

@@ -8,6 +8,7 @@ use Signati\Core\Tags\Emisor;
 use Signati\Core\Tags\Impuestos;
 use Signati\Core\Tags\Receptor;
 use Signati\Core\Tags\Relacionado;
+use Signati\Core\Certificado\Certificados;
 use Spatie\ArrayToXml\ArrayToXml;
 use DOMDocument;
 
@@ -68,6 +69,14 @@ class CFDI
         $this->document['cfdi:Impuestos'] = $im->getImpuestos();
     }
 
+    /**
+     * @param {String} cerpath
+     */
+    public function certificar(string $cerpath)
+    {
+        $cer = new Certificados();
+        return $cer->getNoCer('/var/www/CSD/CSD_ALBA_XKARAJAM_MENDEZ_XAMA620210DQ5_20190528_180046.cer');
+    }
 
     public function getArray()
     {
