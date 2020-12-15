@@ -1,6 +1,10 @@
 <?php
 
-namespace Signati\Core\Certificado;
+namespace Signati\Core\OpenSSL\Certificado;
+
+use mysql_xdevapi\Exception;
+use phpDocumentor\Reflection\Types\Boolean;
+
 class Certificados
 {
     private $_path = '';
@@ -283,16 +287,51 @@ class Certificados
 
             $salidaCer = shell_exec('openssl x509 -inform DER -in  ' . $cer . ' -outform PEM');
             $data = openssl_x509_parse($salidaCer, true);
-            // @ts-ignore
-            /*const serialNumber = pki.certificateFromPem(pem).serialNumber.match(/.{1,2}/g).map((v) => {
-                    return String.fromCharCode(parseInt(v, 16));
-                }).join('');*/
-            return implode('', array_map(function (string $value): string {
-                return chr(intval(hexdec($value)));
-            }, str_split($data['serialNumber'], 2)));
+            return $this->loadDecimal($data['serialNumber']);
 
         } catch (\Exception $e) {
             return $e;
+        }
+    }
+
+    public function loadDecimal(string $decString)
+    {
+        $hexString = '';
+        if (0 === strcasecmp('0x', substr($decString, 0, 2))) {
+            $hexString = substr($decString, 2);
+        } else {
+            $hexString = $this->createBase36()->convert($decString, 10, 16);
+        }
+        return $this->loadHexadecimal($hexString);
+    }
+
+    public static function createBase36(): self
+    {
+        return new self(new BaseConverterSequence('0123456789abcdefghijklmnopqrstuvwxyz'));
+    }
+
+    public function loadHexadecimal(string $hexString)
+    {
+        if (!(bool)preg_match('/^[0-9a-f]*$/', $hexString)) {
+            throw new \UnexpectedValueException('The hexadecimal string contains invalid characters');
+        }
+        $hexString = implode('', array_map(function (string $value): string {
+            return chr(intval(hexdec($value)));
+        }, str_split($hexString, 2)));
+        return $hexString;
+    }
+
+    public function getCer(string $cerpath, bool $title = false)
+    {
+        try {
+            $opensslpms = ['x509', '-inform', 'DER', '-in', `${cerpath}`, '-outform', 'PEM'];
+            $pem = '';
+            if ($title) {
+
+            }
+            return $pem;
+        } catch (Exception $e) {
+            return $e->message();
         }
     }
 

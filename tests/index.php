@@ -15,7 +15,7 @@ $cfdi = new CFDI([
     'Folio' => 'A0103',
     'Fecha' => '2018-02-02T11:36:17',
     'FormaPago' => '01',
-    'NoCertificado' => '30001000000300023708',
+    // 'NoCertificado' => '30001000000300023708',
     'SubTotal' => '4741.38',
     'Moneda' => 'MXN',
     'TipoCambio' => '1',
@@ -23,7 +23,7 @@ $cfdi = new CFDI([
     'TipoDeComprobante' => 'I',
     'MetodoPago' => 'PUE',
     'LugarExpedicion' => '64000',
-]);
+], '3.3');
 $relacion = new Relacionado('01');
 $relacion->addRelacion('asdasdsad');
 $relacion->addRelacion('dalia');
@@ -127,6 +127,7 @@ $impuest->retenciones([
     'Importe' => '',
 ]);
 $cfdi->impuesto($impuest);
+$cfdi->certificar('/var/www/CSD/CSD_ALBA_XKARAJAM_MENDEZ_XAMA620210DQ5_20190528_180046.cer');
 if (!true) {
 
     echo '<pre>';
@@ -136,8 +137,8 @@ if (!true) {
 } else {
 
 
-//var_dump($cfdi->getArrayXML());
-    //header("Content-type: application/xhtml+xml");
-    var_dump(json_encode($cfdi->certificar('amir')));
+    header("Content-type: application/xhtml+xml");
+    echo $cfdi->getDocument();
+    //var_dump(json_encode($cfdi->certificar('amir')));
 }
 //echo 'Escrito: ' . $doc->save("./test.xml") . ' bytes'; // Escrito: 72 bytes

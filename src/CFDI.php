@@ -8,7 +8,7 @@ use Signati\Core\Tags\Emisor;
 use Signati\Core\Tags\Impuestos;
 use Signati\Core\Tags\Receptor;
 use Signati\Core\Tags\Relacionado;
-use Signati\Core\Certificado\Certificados;
+use Signati\Core\OpenSSL\Certificado\Certificados;
 use Spatie\ArrayToXml\ArrayToXml;
 use DOMDocument;
 
@@ -32,6 +32,9 @@ class CFDI
             'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
             'xsi:schemaLocation' => 'http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd',
             'Version' => '3.3',
+            'NoCertificado' => '',
+            'Sello' => '',
+            'Certificado' => ''
         ],
     ];
 
@@ -75,7 +78,8 @@ class CFDI
     public function certificar(string $cerpath)
     {
         $cer = new Certificados();
-        return $cer->getNoCer('/var/www/CSD/CSD_ALBA_XKARAJAM_MENDEZ_XAMA620210DQ5_20190528_180046.cer');
+        $nomcer = $cer->getNoCer($cerpath);
+        $this->tagRoot['_attributes']['NoCertificado'] = $nomcer;
     }
 
     public function getArray()
