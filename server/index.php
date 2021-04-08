@@ -127,11 +127,11 @@ $impuest->retenciones([
     'Importe' => '',
 ]);
 $cfdi->impuesto($impuest);
-$cfdi->certificar('/var/www/CSD/CSD_ALBA_XKARAJAM_MENDEZ_XAMA620210DQ5_20190528_180046.cer');
+// $cfdi->certificar('/var/www/CSD/CSD_ALBA_XKARAJAM_MENDEZ_XAMA620210DQ5_20190528_180046.cer');
 if (!true) {
 
     echo '<pre>';
-    print_r(json_encode($cfdi->getArray()));
+    print_r(json_encode($cfdi->getArray(),JSON_PRETTY_PRINT));
     echo '</pre>';
     exit();
 } else {

@@ -64,12 +64,12 @@ class CFDI
         $this->document['cfdi:Conceptos']['cfdi:Concepto'][] = $co->getConcepto();
     }
 
-    public function impuesto(Impuestos $im)
+    public function impuesto(Impuestos $impuesto)
     {
-        if (!$this->document['cfdi:Impuestos']) {
+        if (!isset($this->document['cfdi:Impuestos'])) {
             $this->document['cfdi:Impuestos'] = [];
         }
-        $this->document['cfdi:Impuestos'] = $im->getImpuestos();
+        $this->document['cfdi:Impuestos'] = $impuesto->impuesto;
     }
 
     /**

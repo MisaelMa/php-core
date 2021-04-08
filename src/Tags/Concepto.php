@@ -2,8 +2,13 @@
 
 namespace Signati\Core\Tags;
 
+use Signati\Core\Tags\Impuestos;
+
 class Concepto
 {
+    private $existComplemnt = false;
+    private $complementProperties = [];
+
     protected $concepto = [
         '_attributes' => [
             'ClaveProdServ' => '',
@@ -17,9 +22,12 @@ class Concepto
             'Descuento' => '',
         ]
     ];
+    private $impuesto;
 
     public function __construct(array $data)
     {
+        $this->existComplemnt = false;
+        $this->impuesto = new Impuestos();
         $this->concepto['_attributes'] = $data;
     }
 
@@ -28,35 +36,18 @@ class Concepto
 
     }
 
-    public function traslado(array $data)
+    public function traslado(array $traslado)
     {
-        if (!$this->concepto['cfdi:Impuestos']) {
-            $this->concepto['cfdi:Impuestos'] = [];
-        }
-
-
-        if (!$this->concepto['cfdi:Impuestos']['cfdi:Traslados']) {
-            $this->concepto['cfdi:Impuestos']['cfdi:Traslados']['cfdi:Traslado'] = [];
-        }
-
-        $this->concepto['cfdi:Impuestos']['cfdi:Traslados']['cfdi:Traslado'][] = [
-            '_attributes' => $data
-        ];
+        $this->concepto['cfdi:Impuestos'] = [];
+        $this->concepto['cfdi:Impuestos'][] = $this->impuesto->traslados($traslado)->impuesto; // = traslado;
+        return $this;
     }
 
-    public function retencion(array $data)
+    public function retencion(array $retencion)
     {
-        if (!$this->concepto['cfdi:Impuestos']) {
-            $this->concepto['cfdi:Impuestos'] = [];
-        }
-
-        if (!$this->concepto['cfdi:Impuestos']['cfdi:Retenciones']) {
-            $this->concepto['cfdi:Impuestos']['cfdi:Retenciones']['cfdi:Retencion'] = [];
-        }
-
-        $this->concepto['cfdi:Impuestos']['cfdi:Retenciones']['cfdi:Retencion'][] = [
-            '_attributes' => $data
-        ];
+        $this->concepto['cfdi:Impuestos'] = [];
+        $this->concepto['cfdi:Impuestos'][] = $this->impuesto->retenciones($retencion)->impuesto; // = traslado;
+        return $this;
     }
 
     public function getConcepto()
@@ -64,5 +55,14 @@ class Concepto
         return $this->concepto;
     }
 
+    public function isComplement(): boolean
+    {
+        return $this->existComplemnt;
+    }
+
+    public function getComplementProperties() // ComplementProperties
+    {
+        return $this->complementProperties;
+    }
 
 }

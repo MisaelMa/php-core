@@ -18,6 +18,11 @@
             "role": "Developer"
         }
     ],
+    "scripts": {
+        "dev": [
+            "php -S localhost:8000 -t server"
+        ]
+    },
     "require": {
 		"php": ">=7.1",
         "spatie/array-to-xml": "^2.11"
