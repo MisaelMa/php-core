@@ -127,6 +127,7 @@ $impuest->retenciones([
     'Importe' => '',
 ]);
 $cfdi->impuesto($impuest);
+$cfdi->sellar('asas','asas');
 // $cfdi->certificar('/var/www/CSD/CSD_ALBA_XKARAJAM_MENDEZ_XAMA620210DQ5_20190528_180046.cer');
 if (!true) {
 

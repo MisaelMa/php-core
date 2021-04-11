@@ -3,6 +3,7 @@
 
 namespace Signati\Core;
 
+use Signati\Core\saxon\Transform;
 use Signati\Core\Tags\Concepto;
 use Signati\Core\Tags\Emisor;
 use Signati\Core\Tags\Impuestos;
@@ -11,6 +12,7 @@ use Signati\Core\Tags\Relacionado;
 use Signati\Core\OpenSSL\Certificado\Certificados;
 use Spatie\ArrayToXml\ArrayToXml;
 use DOMDocument;
+use XSLTProcessor;
 
 class CFDI
 {
@@ -80,6 +82,36 @@ class CFDI
         $cer = new Certificados();
         $nomcer = $cer->getNoCer($cerpath);
         $this->tagRoot['_attributes']['NoCertificado'] = $nomcer;
+    }
+
+    private function getCadenaOriginal(): string
+    {
+        try {
+
+            $name = uniqid(rand(), true);
+            $pathdir = sys_get_temp_dir().'/'.$name.'.xml';
+            file_put_contents($pathdir, $this->getDocument());
+            $stylesheetDir = join([dirname(__DIR__), '/src/resources/xslt33/cadenaoriginal_3_3.xslt']);
+            $transform = new Transform();
+            $cadena = $transform->s($pathdir)->xsl($stylesheetDir)->warnings('silent')->run();
+            unlink($pathdir);
+            return $cadena;
+
+        } catch (Exception $e) {
+            header("HTTP/1.0 500");
+            die($e->getMessage());
+        }
+    }
+
+    private function getSello(string $cadenaOriginal, string $keyfile, string $password)
+    {
+
+    }
+
+    public function sellar(string $keyfile, string $password)
+    {
+        $cadena = $this->getCadenaOriginal();
+        $sello = $this->getSello($cadena, $keyfile, $password);
     }
 
     public function getArray()

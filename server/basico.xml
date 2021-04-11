@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd" Version="3.3" NoCertificado="" Sello="" Certificado="" Serie="A" Folio="A0103" Fecha="2018-02-02T11:36:17" FormaPago="01" SubTotal="4741.38" Moneda="MXN" TipoCambio="1" Total="5500.00" TipoDeComprobante="I" MetodoPago="PUE" LugarExpedicion="64000">
+  <cfdi:CfdiRelacionados TipoRelacion="01">
+    <cfdi:CfdiRelacionado UUID="asdasdsad"/>
+    <cfdi:CfdiRelacionado UUID="dalia"/>
+  </cfdi:CfdiRelacionados>
+  <cfdi:Emisor Rfc="XXXXXX" Nombre="signait" RegimenFiscal="602"/>
+  <cfdi:Receptor Rfc="asdsad" Nombre="amir" ResidenciaFiscal="1231" NumRegIdTrib="1231" UsoCFDI="012"/>
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="3243" NoIdentificacion="234234" Cantidad="1" ClaveUnidad="Pieza" Unidad="1" Descripcion="asdad" ValorUnitario="322332" Importe="00" Descuento="00">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="" Impuesto="" TipoFactor="" TasaOCuota="" Importe=""/>
+        </cfdi:Traslados>
+        <cfdi:Retenciones>
+          <cfdi:Retencion Base="" Impuesto="" TipoFactor="" TasaOCuota="" Importe=""/>
+        </cfdi:Retenciones>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="3243" NoIdentificacion="234234" Cantidad="1" ClaveUnidad="Pieza" Unidad="1" Descripcion="asdad" ValorUnitario="322332" Importe="00" Descuento="00"/>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos TotalImpuestosRetenidos="" TotalImpuestosTrasladados="">
+    <cfdi:Traslados>
+      <cfdi:Traslado Impuesto="" TipoFactor="" TasaOCuota="" Importe=""/>
+      <cfdi:Traslado Impuesto="" TipoFactor="" TasaOCuota="" Importe=""/>
+      <cfdi:Traslado Impuesto="" TipoFactor="" TasaOCuota="" Importe=""/>
+    </cfdi:Traslados>
+    <cfdi:Retenciones>
+      <cfdi:Retencion Impuesto="" TipoFactor="" TasaOCuota="" Importe=""/>
+      <cfdi:Retencion Impuesto="" TipoFactor="" TasaOCuota="" Importe=""/>
+    </cfdi:Retenciones>
+  </cfdi:Impuestos>
+</cfdi:Comprobante>

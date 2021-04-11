@@ -35,8 +35,6 @@ class Certificados
     function generaKeyPem($nombreKey, $password)
     {
 
-        $nombreKey = $this->_path . $nombreKey;
-
         if (file_exists($nombreKey)) {
             $salida = shell_exec('openssl pkcs8 -inform DER -in ' . $nombreKey . ' -out ' . $nombreKey . '.pem -passin pass:' . $password . ' 2>&1');
             if ($salida == '' || $salida == false || $salida == null) {
