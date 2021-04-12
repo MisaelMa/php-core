@@ -127,8 +127,11 @@ $impuest->retenciones([
     'Importe' => '',
 ]);
 $cfdi->impuesto($impuest);
-$cfdi->sellar('asas','asas');
-// $cfdi->certificar('/var/www/CSD/CSD_ALBA_XKARAJAM_MENDEZ_XAMA620210DQ5_20190528_180046.cer');
+$cer = join([dirname(__DIR__), '/server/certificados/LAN7008173R5.cer']);
+$key = join([dirname(__DIR__), '/server//certificados/LAN7008173R5.key']);
+$cfdi->certificar($cer);
+
+$cfdi->sellar($key,'12345678a');
 if (!true) {
 
     echo '<pre>';

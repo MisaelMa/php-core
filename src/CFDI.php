@@ -9,7 +9,7 @@ use Signati\Core\Tags\Emisor;
 use Signati\Core\Tags\Impuestos;
 use Signati\Core\Tags\Receptor;
 use Signati\Core\Tags\Relacionado;
-use Signati\Core\OpenSSL\Certificado\Certificados;
+use Signati\Core\OpenSSL\Certificados;
 use Spatie\ArrayToXml\ArrayToXml;
 use DOMDocument;
 use XSLTProcessor;
@@ -89,7 +89,7 @@ class CFDI
         try {
 
             $name = uniqid(rand(), true);
-            $pathdir = sys_get_temp_dir().'/'.$name.'.xml';
+            $pathdir = sys_get_temp_dir() . '/' . $name . '.xml';
             file_put_contents($pathdir, $this->getDocument());
             $stylesheetDir = join([dirname(__DIR__), '/src/resources/xslt33/cadenaoriginal_3_3.xslt']);
             $transform = new Transform();
@@ -105,13 +105,22 @@ class CFDI
 
     private function getSello(string $cadenaOriginal, string $keyfile, string $password)
     {
-
+        $cadena_original = $cadenaOriginal;
+        $openss = new Certificados();
+        $archivoKeyPem = $openss->generaKeyPem($keyfile, $password);
+        $pkeyid = openssl_get_privatekey($archivoKeyPem['privateKeyPem']);
+        openssl_sign($cadena_original, $crypttext, $pkeyid, OPENSSL_ALGO_SHA256);
+        openssl_free_key($pkeyid);
+        $sello = base64_encode($crypttext);
+        return $sello;
     }
 
     public function sellar(string $keyfile, string $password)
     {
         $cadena = $this->getCadenaOriginal();
         $sello = $this->getSello($cadena, $keyfile, $password);
+        var_dump($sello);
+        exit();
     }
 
     public function getArray()

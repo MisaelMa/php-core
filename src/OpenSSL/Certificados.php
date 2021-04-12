@@ -1,6 +1,6 @@
 <?php
 
-namespace Signati\Core\OpenSSL\Certificado;
+namespace Signati\Core\OpenSSL;
 
 use mysql_xdevapi\Exception;
 use phpDocumentor\Reflection\Types\Boolean;
@@ -36,11 +36,12 @@ class Certificados
     {
 
         if (file_exists($nombreKey)) {
-            $salida = shell_exec('openssl pkcs8 -inform DER -in ' . $nombreKey . ' -out ' . $nombreKey . '.pem -passin pass:' . $password . ' 2>&1');
-            if ($salida == '' || $salida == false || $salida == null) {
-                $this->_keyPem = $nombreKey . '.pem';
-                $this->_estableceError(1);
-                return $this->_return;
+            $salida = shell_exec('openssl pkcs8 -inform DER -in ' . $nombreKey . ' -outform PEM -passin pass:' . $password . ' 2>&1');
+            if ($salida != '' || $salida != false || $salida != null) {
+                $privateKey = [];
+                $privateKey['privateKeyPem'] = $salida;
+                $privateKey['privatekey'] =  trim(preg_split('/(-+[^-]+-+)/', $salida)[1]);
+                return $privateKey;
             } else if (strpos($salida, 'Error decrypting') !== false) {
                 $this->_estableceError(0, 'Contraseña incorrecta');
                 return $this->_return;
