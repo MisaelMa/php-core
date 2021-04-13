@@ -292,6 +292,18 @@ class Certificados
             return $e;
         }
     }
+    public function getCer(string $cer)
+    {
+        try {
+
+            $salidaCer = shell_exec('openssl x509 -inform DER -in  ' . $cer . ' -outform PEM');
+
+            $cer =  trim(preg_split('/(-+[^-]+-+)/', $salidaCer)[1]);
+            return $cer;
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
 
     public function loadDecimal(string $decString)
     {
@@ -320,19 +332,6 @@ class Certificados
         return $hexString;
     }
 
-    public function getCer(string $cerpath, bool $title = false)
-    {
-        try {
-            $opensslpms = ['x509', '-inform', 'DER', '-in', `${cerpath}`, '-outform', 'PEM'];
-            $pem = '';
-            if ($title) {
-
-            }
-            return $pem;
-        } catch (Exception $e) {
-            return $e->message();
-        }
-    }
 
     function certificadoBase64($nombreCer)
     {

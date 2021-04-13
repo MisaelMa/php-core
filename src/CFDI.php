@@ -82,6 +82,7 @@ class CFDI
         $cer = new Certificados();
         $nomcer = $cer->getNoCer($cerpath);
         $this->tagRoot['_attributes']['NoCertificado'] = $nomcer;
+        $this->tagRoot['_attributes']['Certificado']  =  $cer->getCer($cerpath);
     }
 
     private function getCadenaOriginal(): string
@@ -119,8 +120,8 @@ class CFDI
     {
         $cadena = $this->getCadenaOriginal();
         $sello = $this->getSello($cadena, $keyfile, $password);
-        var_dump($sello);
-        exit();
+        $this->tagRoot['_attributes']['Sello'] = $sello;
+
     }
 
     public function getArray()
