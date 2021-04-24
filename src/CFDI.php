@@ -26,7 +26,7 @@ class CFDI
         'cfdi:Receptor' => [],
         'cfdi:Conceptos' => [],
     ];
-
+    protected $encoding = 'utf-8';
     protected $tagRoot = [
         'rootElementName' => 'cfdi:Comprobante',
         '_attributes' => [
@@ -44,6 +44,11 @@ class CFDI
     {
         $this->tagRoot['_attributes'] = array_merge($this->tagRoot['_attributes'], $data);
         $this->tagRoot['_attributes']['Version'] = $version;
+    }
+
+    public function setAttributesXml(string $version = '1.0',string $encoding = 'utf-8') {
+        $this->tagRoot['_attributes']['Version'] = $version;
+        $this->encoding = $encoding;
     }
 
     public function relacionados(Relacionado $re)
@@ -131,7 +136,7 @@ class CFDI
 
     public function getDocument()
     {
-        $result = ArrayToXml::convert($this->document, $this->tagRoot, true, 'UTF-8');
+        $result = ArrayToXml::convert($this->document, $this->tagRoot, true, $this->encoding);
         $doc = new DOMDocument();
         $doc->loadXML($result);
         $doc->preserveWhiteSpace = false;

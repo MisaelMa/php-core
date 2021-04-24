@@ -128,7 +128,7 @@ $impuest->retenciones([
 ]);
 $cfdi->impuesto($impuest);
 $cer = join([dirname(__DIR__), '/server/certificados/LAN7008173R5.cer']);
-$key = join([dirname(__DIR__), '/server//certificados/LAN7008173R5.key']);
+$key = join([dirname(__DIR__), '/server/certificados/LAN7008173R5.key']);
 $cfdi->certificar($cer);
 
 $cfdi->sellar($key,'12345678a');
