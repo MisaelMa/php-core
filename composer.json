@@ -29,8 +29,8 @@
   },
   "archive": {
     "exclude": [
-      "/server",
-      "/SWF"
+      "Core/server",
+      "Core/SWF"
     ]
   },
   "require": {
