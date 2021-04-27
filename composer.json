@@ -1,38 +1,48 @@
 {
-    "name": "signati/core",
-    "description": "cfdi xml.",
-    "keywords": ["CFDI", "XML", "package"],
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "signati",
-            "email": "signatidev@gmail.com",
-            "homepage": "https://signati.io",
-            "role": "Developer"
-        },
-        {
-            "name": "amir misael marin coh",
-            "email": "amisael.amir.misael@gmail.com",
-            "homepage": "https://misael.signati.app",
-            "role": "Developer"
-        }
-    ],
-    "scripts": {
-        "dev": [
-            "php -S localhost:8000 -t server"
-        ]
+  "name": "signati/core",
+  "description": "cfdi xml.",
+  "keywords": [
+    "CFDI",
+    "XML",
+    "package"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "signati",
+      "email": "signatidev@gmail.com",
+      "homepage": "https://signati.io",
+      "role": "Developer"
     },
-    "require": {
-		"php": ">=7.1",
-        "spatie/array-to-xml": "^2.11"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^6.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "Signati\\Core\\": "src/"
-        }
+    {
+      "name": "amir misael marin coh",
+      "email": "amisael.amir.misael@gmail.com",
+      "homepage": "https://misael.signati.app",
+      "role": "Developer"
     }
+  ],
+  "scripts": {
+    "dev": [
+      "php -S localhost:8000 -t server"
+    ]
+  },
+  "archive": {
+    "exclude": [
+      "/server",
+      "/SWF"
+    ]
+  },
+  "require": {
+    "php": ">=7.1",
+    "spatie/array-to-xml": "^2.11"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Signati\\Core\\": "src/"
+    }
+  }
 }
