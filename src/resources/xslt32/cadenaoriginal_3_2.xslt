@@ -45,7 +45,7 @@
 	<xsl:include href="utilerias.xslt"/>
 	<!-- 
 		En esta sección se define la inclusión de las demás plantillas de transformación para 
-		la generación de las cadenas originales de los complementos fiscales 
+		la generación de las cadenas originales de los Complementos fiscales
 	-->
 	<xsl:include href="ecc.xslt"/>
 	<!--<xsl:include href="psgecfd.xslt"/>-->

@@ -4,6 +4,7 @@ namespace Tests;
 require '../vendor/autoload.php';
 
 use Signati\Core\CFDI;
+use Signati\Core\Complementos\Iedu;
 use Signati\Core\Tags\Concepto;
 use Signati\Core\Tags\Emisor;
 use Signati\Core\Tags\Impuestos;
@@ -87,6 +88,15 @@ $concepto2 = new Concepto([
     'Importe' => '00',
     'Descuento' => '00',
 ]);
+$iedu = new Iedu([
+    'version' => '1.0',
+    'autRVOE' => '201587PRIM',
+    'CURP' => 'EJEMPLOGH101004HQRRRN',
+    'nivelEducativo' => 'Primaria',
+    'nombreAlumno' => 'ejemplo garcia correa',
+    'rfcPago' => 'XAXX010101000',
+]);
+$concepto2->complemento($iedu);
 $cfdi->concepto($concepto2);
 
 $impuest = new Impuestos([
@@ -131,11 +141,11 @@ $cer = join([dirname(__DIR__), '/server/certificados/LAN7008173R5.cer']);
 $key = join([dirname(__DIR__), '/server/certificados/LAN7008173R5.key']);
 $cfdi->certificar($cer);
 
-$cfdi->sellar($key,'12345678a');
+$cfdi->sellar($key, '12345678a');
 if (!true) {
 
     echo '<pre>';
-    print_r(json_encode($cfdi->getArray(),JSON_PRETTY_PRINT));
+    print_r(json_encode($cfdi->getArray(), JSON_PRETTY_PRINT));
     echo '</pre>';
     exit();
 } else {

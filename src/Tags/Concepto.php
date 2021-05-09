@@ -2,12 +2,18 @@
 
 namespace Signati\Core\Tags;
 
+use Signati\Core\Complementos\Iedu;
 use Signati\Core\Tags\Impuestos;
 
 class Concepto
 {
     private $existComplemnt = false;
-    private $complementProperties = [];
+    private $complementProperties = [
+        'key' => '',
+        'xmlns' => '',
+        'xmlnskey' => '',
+        'schemaLocation' => ''
+    ];
 
     protected $concepto = [
         '_attributes' => [
@@ -31,9 +37,20 @@ class Concepto
         $this->concepto['_attributes'] = $data;
     }
 
-    public function complemento()
+    public function complemento(Iedu $data)
     {
+        if (!isset($this->concepto['cfdi:ComplementoConcepto'])) {
+            $this->concepto['cfdi:ComplementoConcepto'] = [];
+        }
 
+        $this->existComplemnt = true;
+//        var_dump($data->getComplement());
+//        exit();
+        $this->complementProperties['key'] = $data->getComplement()['key'];
+        $this->complementProperties['xmlns'] = $data->getComplement()['xmlns'];
+        $this->complementProperties['xmlnskey'] = $data->getComplement()['xmlnskey'];
+        $this->complementProperties['schemaLocation'] = $data->getComplement()['schemaLocation'];
+        $this->concepto['cfdi:ComplementoConcepto'][$data->getComplement()['key']] = $data->getComplement()['complement'];
     }
 
     public function traslado(array $traslado)
@@ -55,7 +72,7 @@ class Concepto
         return $this->concepto;
     }
 
-    public function isComplement(): boolean
+    public function isComplement()
     {
         return $this->existComplemnt;
     }

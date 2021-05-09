@@ -30,9 +30,7 @@ class CFDI
     protected $tagRoot = [
         'rootElementName' => 'cfdi:Comprobante',
         '_attributes' => [
-            'xmlns:cfdi' => 'http://www.sat.gob.mx/cfd/3',
-            'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-            'xsi:schemaLocation' => 'http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd',
+            'xsi:schemaLocation' => '',
             'Version' => '3.3',
             'NoCertificado' => '',
             'Sello' => '',
@@ -43,10 +41,18 @@ class CFDI
     public function __construct(array $data, string $version = '3.3')
     {
         $this->tagRoot['_attributes'] = array_merge($this->tagRoot['_attributes'], $data);
+        $this->addXmlns('xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $this->addXmlns('cfdi', 'http://www.sat.gob.mx/cfd/3');
+
+        $this->addSchemaLocation([
+            'http://www.sat.gob.mx/cfd/3',
+            'http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd',
+        ]);
         $this->tagRoot['_attributes']['Version'] = $version;
     }
 
-    public function setAttributesXml(string $version = '1.0',string $encoding = 'utf-8') {
+    public function setAttributesXml(string $version = '1.0', string $encoding = 'utf-8')
+    {
         $this->tagRoot['_attributes']['Version'] = $version;
         $this->encoding = $encoding;
     }
@@ -68,7 +74,42 @@ class CFDI
 
     public function concepto(Concepto $co)
     {
+        if ($co->isComplement()) {
+            $properties = $co->getComplementProperties();
+            $this->addXmlns($properties['xmlnskey'], $properties['xmlns']);
+            $this->addSchemaLocation($properties['schemaLocation']);
+        }
         $this->document['cfdi:Conceptos']['cfdi:Concepto'][] = $co->getConcepto();
+    }
+
+    private function addXmlns(string $xmlnsKey, string $xmlns)
+    {
+        $this->tagRoot['_attributes']['xmlns:' . $xmlnsKey] = $xmlns;
+    }
+
+    private function addSchemaLocation(array $locations)
+    {
+
+        if (!$this->tagRoot['_attributes']['xsi:schemaLocation']) {
+            $this->tagRoot['_attributes']['xsi:schemaLocation'] = '';
+        }
+        $schemaLocation = $this->schema($locations);
+        $this->tagRoot['_attributes']['xsi:schemaLocation'] .= ' ' . $schemaLocation;
+    }
+
+    private function schema(array $locations): string
+    {
+        $schemaL = '';
+        $i = 0;
+        foreach ($locations as $location) {
+            if ($i === 0) {
+                $schemaL .= $location;
+            } else {
+                $schemaL .= ' ' . $location;
+            }
+            $i++;
+        }
+        return $schemaL;
     }
 
     public function impuesto(Impuestos $impuesto)
@@ -87,7 +128,7 @@ class CFDI
         $cer = new Certificados();
         $nomcer = $cer->getNoCer($cerpath);
         $this->tagRoot['_attributes']['NoCertificado'] = $nomcer;
-        $this->tagRoot['_attributes']['Certificado']  =  $cer->getCer($cerpath);
+        $this->tagRoot['_attributes']['Certificado'] = $cer->getCer($cerpath);
     }
 
     private function getCadenaOriginal(): string
